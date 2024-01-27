@@ -1,0 +1,26 @@
+{
+  "name": "typizator-client-example",
+  "version": "0.1.0",
+  "description": "Example React site using the typizator-client library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cvdsfif/typizator-client-example.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "typizator-client": "^1.0.0-beta.1"
+  }
+}
