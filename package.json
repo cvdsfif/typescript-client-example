@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "dev": "node serve.js",
-    "test": "tsc --build --clean && jest && $(yarn bin)/coverage-badges"
+    "test": "tsc --build --clean && jest"
   },
   "repository": {
     "type": "git",
