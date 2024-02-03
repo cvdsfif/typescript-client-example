@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "dev": "node serve.js",
-    "test": "tsc --build --clean && jest"
+    "test": "tsc --build --clean && jest $npm_config_dir"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "@types/react-dom": "^18.2.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
     "typizator-client": "^1.0.0-beta.4"
   }
 }

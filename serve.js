@@ -38,5 +38,6 @@ const liveServer = require("live-server");
         port: +process.env.PORT || 3001,
         // Uses `public` as the local server folder.
         root: "public",
+        file: "index.html"
     });
 })();

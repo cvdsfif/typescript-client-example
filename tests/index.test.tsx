@@ -1,6 +1,6 @@
 import { render, getByTestId, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import App from "../src/index";
+import { App } from "../src/index";
 import React from "react";
 
 describe("Testing page calling typizator-based server library", () => {

@@ -1,58 +1,58 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ErrorPage } from "./error-page";
+import { Simple } from "./routes/simple";
+import { Query } from "./routes/query";
 import { connectTsApi } from "typizator-client";
-import { simpleApiS } from "./shared/api-definition";
 import { CdkLibraryExampleStack } from "./shared/cdk-exports.json";
+import { simpleApiS } from "./shared/api-definition";
 
-const App = () => {
-    const [frozen, setFrozen] = useState(false);
-    const [callLabel, setCallLabel] = useState("Call");
+export const App = () => {
+    const freezer = {
+        freeze: () => { },
+        unfreeze: () => { },
+    }
+
     const testApi = useMemo(() =>
         connectTsApi(
             simpleApiS.metadata,
             CdkLibraryExampleStack.ExampleApiURL,
-            () => { setFrozen(true); setCallLabel("Loading...") },
-            () => { setFrozen(false); setCallLabel("Call") }
+            () => { freezer.freeze() },
+            () => { freezer.unfreeze() }
         ), []
-    );
+    )
 
-    const [result, setResult] = useState("////");
-    const [fn, setFn] = useState("miaou");
-    const [err, setErr] = useState("");
-
-
-    const asyncCall = async (fnName: string) => {
-        try {
-            switch (fnName) {
-                case "miaou": setResult(await testApi.meow()); break;
-                case "helloWorld": setResult(await testApi.helloWorld("anybody", 100n)); break;
-                case "increment":
-                    const received = await testApi.increment({ id: 1n, name: "?" });
-                    setResult(`id:${received.id}, name:${received.name}`);
-                    break;
-            }
-            setErr("");
-        } catch (e: any) {
-            setErr(e.message);
-            setResult("");
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Simple api={testApi} freezer={freezer} />,
+            errorElement: <ErrorPage />
+        },
+        {
+            path: "/simple",
+            element: <Simple api={testApi} freezer={freezer} />
+        },
+        {
+            path: "/query",
+            element: <Query api={testApi} freezer={freezer} />
         }
-    }
-
-    const callApi = () => {
-        asyncCall(fn);
-    }
+    ])
 
     return (
         <>
-            <div><select data-testid="functionSelect" value={fn} onChange={e => setFn(e.target.value)}>
-                <option value={"miaou"}>Miaou</option>
-                <option value={"helloWorld"}>Hello world</option>
-                <option value={"increment"}>Increment</option>
-            </select></div>
-            <div><button data-testid="callbutton" onClick={e => callApi()} disabled={frozen}>{callLabel}</button></div>
-            <div data-testid="result">{result}</div>
-            <div data-testid="errDisplay" style={{ color: "#f00" }}>{err}</div>
+            <nav>
+                <table border={1}>
+                    <tbody>
+                        <tr>
+                            <td><a href="/simple">Simple query</a></td>
+                            <td><a href="/query" data-testid="queryLink">Query</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>&nbsp;</div>
+            </nav>
+            <RouterProvider router={router} />
         </>
     );
 }
 
-export default App;

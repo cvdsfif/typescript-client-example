@@ -15,6 +15,7 @@ export const simpleApiS = apiS({
     },
     increment: { args: [simpleRecordS], retVal: simpleRecordS },
     doubleArray: { args: [arrayS(stringS.notNull).notNull], retVal: arrayS(stringS.notNull).notNull },
-    errorGenerator: { args: [stringS.notNull, stringS, stringS.optional] }
+    errorGenerator: { args: [stringS.notNull, stringS, stringS.optional] },
+    query: { args: [stringS.notNull], retVal: stringS.notNull }
 });
-export type SimpleApi = ApiImplementation<typeof apiS>;
+export type SimpleApi = ApiImplementation<typeof simpleApiS>;
